@@ -1,4 +1,4 @@
-import { Box, Heading, Image, VStack, Text, Button, useToast, HStack, Stack } from '@chakra-ui/react'
+import { Image, VStack, Text, Button, useToast, HStack, Stack } from '@chakra-ui/react'
 import { useFetch } from '../hooks/useFetch'
 import Empty from '../assets/empty.svg'
 import { Plus } from '@phosphor-icons/react'
@@ -8,8 +8,9 @@ import { ICreateList, createListSchema } from '../schemas/schemas'
 import { api } from '../services/api'
 import { List } from '../components/List'
 import { IList } from '../types/types'
+import { DisplayLayout } from '../layouts/DisplayLayout'
 
-export const Dashboard = () => {
+export const Lists = () => {
   const { data, refetch } = useFetch<IList[]>({ url: '/lists' })
 
   const isEmpty = data?.length === 0
@@ -75,12 +76,14 @@ export const Dashboard = () => {
   )
 
   const EmptyCard = () => (
-    <VStack gap={8} w={'25%'}>
-      <Image src={Empty} />
-      <Text textAlign="center">
-        Parece que você ainda não possui nenhuma lista criada. Crie uma nova lista para começar.
-      </Text>
-    </VStack>
+    <Stack justifyContent="center" alignItems="center">
+      <VStack gap={8} w={'25%'}>
+        <Image src={Empty} />
+        <Text textAlign="center">
+          Parece que você ainda não possui nenhuma lista criada. Crie uma nova lista para começar.
+        </Text>
+      </VStack>
+    </Stack>
   )
 
   const UserLists = () => (
@@ -92,13 +95,9 @@ export const Dashboard = () => {
   )
 
   return (
-    <Box padding={16}>
-      <HStack justifyContent="space-between">
-        <Heading>Listas</Heading>
-        <ListModal />
-      </HStack>
-      <Stack>{isEmpty ? <EmptyCard /> : <UserLists />}</Stack>
-    </Box>
+    <DisplayLayout title="Listas" action={<ListModal />}>
+      <Stack flex={1}>{isEmpty ? <EmptyCard /> : <UserLists />}</Stack>
+    </DisplayLayout>
   )
 }
 

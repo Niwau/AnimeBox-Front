@@ -5,21 +5,28 @@ import { api } from '../services/api'
 import { Form, FormStructure, FormUtils } from '../components/Form'
 import React from 'react'
 import { ILogin, loginSchema } from '../schemas/schemas'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuthContext } from '../contexts/AuthContext'
 
 interface LoginResponse {
   token: string
+  id: number;
+  role: 'ADMIN' | 'NORMAL'
 }
 
 export const Login = () => {
   const { setIsAuth } = useAuthContext()
 
+  const navigate = useNavigate()
+
   const onSubmit = async (form: ILogin, utils: FormUtils<ILogin>) => {
     try {
       const res = await api.post<LoginResponse>('/account/login', form)
       localStorage.setItem('token', res.data.token)
+      localStorage.setItem('user_id', res.data.id.toString())
+      localStorage.setItem('user_role', res.data.role)
       setIsAuth(true)
+      navigate('/lists')
     } catch (e) {
       utils.setError('email', {
         message: 'Email ou senha inválidos',

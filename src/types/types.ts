@@ -18,3 +18,17 @@ export interface IAnime {
   image: string
   id: number
 }
+
+export interface IComment {
+  id: number;
+  author: string;
+  comment: string;
+  author_id: number;
+}
+
+export interface IUser {
+  name: string;
+  email: string;
+  role: 'ADMIN' | 'NORMAL',
+  id: number;
+}

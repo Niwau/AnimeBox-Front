@@ -27,8 +27,34 @@ export const createListSchema = z.object({
   name: z.string().min(1, 'Campo obrigatório').max(60, 'O nome precisa conter no máximo 60 caracteres'),
 })
 
+export const selectListSchema = z.object({
+  list_id: z.string().min(1, 'Campo obrigatório'),
+})
+
+export const createCommentSchema = z.object({
+  comment: z.string().min(1, 'Campo obrigatório').max(60, 'O comentário precisa conter no máximo 60 caracteres'),
+})
+
+export const updateProfileSchema = z.object({
+  name: userNameSchema,
+})
+
+export const createAnimeSchema = z.object({
+  image: z.instanceof(FileList, { message: 'Campo obrigatório' }),
+  name: z.string().min(1, 'Campo obrigatório'),
+  sinopsis: z.string().min(1, 'Campo obrigatório'),
+})
+
 export type ISignUp = z.infer<typeof signUpSchema>
 
 export type ILogin = z.infer<typeof loginSchema>
 
 export type ICreateList = z.infer<typeof createListSchema>
+
+export type ISelectList = z.infer<typeof selectListSchema>
+
+export type ICreateComment = z.infer<typeof createCommentSchema>
+
+export type IUpdateProfile = z.infer<typeof updateProfileSchema>
+
+export type ICreateAnime = z.infer<typeof createAnimeSchema>

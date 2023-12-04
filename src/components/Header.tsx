@@ -67,7 +67,7 @@ export const Header = () => {
           justifyContent="center"
           alignItems="center"
         >
-          <Text>Você está usando uma conta de adminsitador</Text>
+          <Text>Você está usando uma conta de administrador</Text>
         </HStack>
       )}
       <HStack py={4} px={16} gap={4} fontWeight={500}>

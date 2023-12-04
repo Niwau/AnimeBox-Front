@@ -1,46 +1,60 @@
 import { createBrowserRouter } from 'react-router-dom'
 import { SignUp } from '../pages/SignUp'
 import { Login } from '../pages/Login'
-import { Root } from '../layouts/Root'
 import { Lists } from '../pages/Lists'
 import { ListPage } from '../pages/ListPage'
 import { AnimesPage } from '../pages/AnimesPage'
 import { AnimePage } from '../pages/AnimePage'
 import { UsersPage } from '../pages/UsersPage'
+import { Protected } from '../layouts/Protected'
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <Root />,
-    children: [
-      {
-        path: 'login',
-        element: <Login />,
-      },
-      {
-        path: 'signup',
-        element: <SignUp />,
-      },
-      {
-        path: 'lists',
-        element: <Lists />,
-      },
-      {
-        path: 'lists/:id',
-        element: <ListPage/>,
-      },
-      {
-        path: 'animes',
-        element: <AnimesPage/>
-      },
-      {
-        path: 'animes/:id',
-        element: <AnimePage/>
-      },
-      {
-        path: 'users',
-        element: <UsersPage/>
-      }
-    ],
+    element: <Login />,
+  },
+  {
+    path: 'signup',
+    element: <SignUp />,
+  },
+  {
+    path: 'lists',
+    element: (
+      <Protected>
+        <Lists />
+      </Protected>
+    ),
+  },
+  {
+    path: 'lists/:id',
+    element: (
+      <Protected>
+        <ListPage />
+      </Protected>
+    ),
+  },
+  {
+    path: 'animes',
+    element: (
+      <Protected>
+        <AnimesPage />
+      </Protected>
+    ),
+  },
+  {
+    path: 'animes/:id',
+    element: (
+      <Protected>
+        <AnimePage />
+      </Protected>
+    ),
+  },
+  {
+    path: 'users',
+    element: (
+      <Protected>
+        <UsersPage />
+      </Protected>
+    ),
   },
 ])

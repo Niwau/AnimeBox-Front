@@ -1,4 +1,4 @@
-import { FormControl, FormErrorMessage, FormLabel, Input, InputProps, Select, Stack, Textarea } from '@chakra-ui/react'
+import { FormControl, FormErrorMessage, FormLabel, Input, InputProps, Select, Stack, Textarea, BoxProps } from '@chakra-ui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, DefaultValues, FieldValues, Path, UseFormSetError, UseFormResetField } from 'react-hook-form'
 import { ZodSchema } from 'zod'
@@ -8,6 +8,7 @@ interface FormProps<T extends FieldValues> {
   structure: FormStructure<T>
   footer?: React.ReactNode
   onSubmit: (data: T, utils: FormUtils<T>) => void | Promise<void>
+  containerProps?: BoxProps
 }
 
 interface Input<T> extends InputProps {
@@ -35,7 +36,7 @@ interface FormOption {
   label: string | number
 }
 
-export const Form = <T extends FieldValues>({ structure, header, footer, ...form }: FormProps<T>) => {
+export const Form = <T extends FieldValues>({ structure, header, footer, containerProps, ...form }: FormProps<T>) => {
   const {
     register,
     formState: { errors },
@@ -52,7 +53,7 @@ export const Form = <T extends FieldValues>({ structure, header, footer, ...form
   })
 
   return (
-    <Stack as="form" gap="8px" flex={1} onSubmit={onSubmit}>
+    <Stack as="form" gap="8px" flex={1} onSubmit={onSubmit} {...containerProps}>
       {header}
       {structure.inputs.map((input, index) => (
         <FormControl key={index} isInvalid={!!errors[input.name]}>

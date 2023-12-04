@@ -19,7 +19,6 @@ export const SignUp = () => {
       toast({
         title: 'Conta criada com sucesso!',
         status: 'success',
-        position: 'top-right',
       })
     } catch (e) {
       const error = e as AxiosError<ErrorResponse>
@@ -34,8 +33,11 @@ export const SignUp = () => {
   }
 
   return (
-    <Flex>
+    <Flex h='100%'>
       <Form
+        containerProps={{
+          p: 8
+        }}
         header={
           <React.Fragment>
             <Center>
@@ -60,7 +62,7 @@ export const SignUp = () => {
           </React.Fragment>
         }
       />
-      <Image src={Gojo} w="70vw" minH={'100vh'} objectFit={'cover'} />
+      <Image src={Gojo} h='100%' maxW='70%' objectFit={'cover'} />
     </Flex>
   )
 }

@@ -4,30 +4,22 @@ import { Children } from '../types/types'
 interface IAuthContext {
   isAuth: boolean
   setIsAuth: (isAuth: boolean) => void
-  logout: () => void
 }
 
 export const AuthContext = createContext<IAuthContext>({} as IAuthContext)
 
 export const AuthContextProvider = ({ children }: Children) => {
-  const [isAuth, setIsAuth] = useState(true)
+  const [isAuth, setIsAuth] = useState(false)
 
   useEffect(() => {
     const token = localStorage.getItem('token')
 
-    if (!token) {
-      setIsAuth(false)
-      return
+    if (token) {
+      setIsAuth(true)
     }
   }, [])
 
-  const logout = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('user_id')
-    setIsAuth(false)
-  }
-
-  return <AuthContext.Provider value={{ isAuth, setIsAuth, logout }}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={{ isAuth, setIsAuth }}>{children}</AuthContext.Provider>
 }
 
 export const useAuthContext = () => {

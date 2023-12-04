@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { Link, HStack, Input, FormControl, FormLabel, Button, useToast, Stack, Text } from '@chakra-ui/react'
 import { useAuthContext } from '../contexts/AuthContext'
 import { Modal } from './Modal'
@@ -12,12 +12,20 @@ import { api } from '../services/api'
 import { useSearchContext } from '../contexts/SearchContext'
 
 export const Header = () => {
-  const { logout } = useAuthContext()
+  const { setIsAuth } = useAuthContext()
   const { setSearch, search } = useSearchContext()
   const { data, refetch } = useFetch<IUser>({ url: '/account' })
   const toast = useToast()
 
   const location = useLocation()
+  const navigate = useNavigate()
+
+  const logout = () => {
+    navigate('/')
+    setIsAuth(false)
+    localStorage.removeItem('token')
+    localStorage.removeItem('user_id')
+  }
 
   const deleteAccount = async () => {
     try {
@@ -49,9 +57,19 @@ export const Header = () => {
 
   return (
     <Stack>
-      <HStack p={2} bgColor='purple.600' color='white' gap={4} fontWeight={500} justifyContent='center' alignItems='center'>
-        <Text>Você está usando uma conta de adminsitador</Text>
-      </HStack>
+      {isAdmin && (
+        <HStack
+          p={2}
+          bgColor="purple.600"
+          color="white"
+          gap={4}
+          fontWeight={500}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Text>Você está usando uma conta de adminsitador</Text>
+        </HStack>
+      )}
       <HStack py={4} px={16} gap={4} fontWeight={500}>
         <Link as={NavLink} to="/animes">
           Animes

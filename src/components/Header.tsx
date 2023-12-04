@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from 'react-router-dom'
-import { Link, HStack, Input, FormControl, FormLabel, Button, useToast } from '@chakra-ui/react'
+import { Link, HStack, Input, FormControl, FormLabel, Button, useToast, Stack, Text } from '@chakra-ui/react'
 import { useAuthContext } from '../contexts/AuthContext'
 import { Modal } from './Modal'
 import { Form } from './Form'
@@ -45,78 +45,87 @@ export const Header = () => {
     setSearch(e.target.value)
   }
 
+  const isAdmin = localStorage.getItem('user_role') === 'ADMIN'
+
   return (
-    <HStack py={4} px={16} gap={4} fontWeight={500}>
-      <Link as={NavLink} to="/animes">
-        Animes
-      </Link>
-      <Link as={NavLink} to="/lists">
-        Listas
-      </Link>
-      <Link as={NavLink} to="/users">
-        Usuários
-      </Link>
-      <Modal
-        title="Perfil"
-        trigger={({ open }) => <Link onClick={open}>Perfil</Link>}
-        body={({ close }) => (
-          <Form
-            onSubmit={async (data) => {
-              if (data.name) {
-                await editAccount(data.name)
-              }
-              close()
-            }}
-            structure={{
-              inputs: [
-                {
-                  name: 'name',
-                  label: 'Nome',
-                },
-              ],
-              schema: updateProfileSchema,
-              defaultValues: {
-                name: data?.name,
-              },
-            }}
-            footer={
-              <React.Fragment>
-                <FormControl>
-                  <FormLabel>Email</FormLabel>
-                  <Input disabled value={data?.email} />
-                </FormControl>
-                <HStack justifyContent="flex-end">
-                  <Dialog
-                    onConfirm={deleteAccount}
-                    title="Excluir conta"
-                    message="Tem certeza que deseja excluir sua conta?"
-                    trigger={({ open }) => (
-                      <Button
-                        variant="outline"
-                        colorScheme="red"
-                        onClick={() => {
-                          open()
-                        }}
-                      >
-                        Excluir
-                      </Button>
-                    )}
-                  />
-                  <Button colorScheme="purple" type="submit">
-                    Salvar
-                  </Button>
-                </HStack>
-              </React.Fragment>
-            }
-          />
+    <Stack>
+      <HStack p={2} bgColor='purple.600' color='white' gap={4} fontWeight={500} justifyContent='center' alignItems='center'>
+        <Text>Você está usando uma conta de adminsitador</Text>
+      </HStack>
+      <HStack py={4} px={16} gap={4} fontWeight={500}>
+        <Link as={NavLink} to="/animes">
+          Animes
+        </Link>
+        <Link as={NavLink} to="/lists">
+          Listas
+        </Link>
+        {isAdmin && (
+          <Link as={NavLink} to="/users">
+            Usuários
+          </Link>
         )}
-      />
-      {location.pathname == '/animes' && (
-        <Input onChange={onInputChange} placeholder="Pesquisar" flex={0.4} mx="auto" value={search}/>
-      )}
-      <Link ml="auto" onClick={logout}>
-        Sair
-      </Link>
-    </HStack>
+        <Modal
+          title="Perfil"
+          trigger={({ open }) => <Link onClick={open}>Perfil</Link>}
+          body={({ close }) => (
+            <Form
+              onSubmit={async (data) => {
+                if (data.name) {
+                  await editAccount(data.name)
+                }
+                close()
+              }}
+              structure={{
+                inputs: [
+                  {
+                    name: 'name',
+                    label: 'Nome',
+                  },
+                ],
+                schema: updateProfileSchema,
+                defaultValues: {
+                  name: data?.name,
+                },
+              }}
+              footer={
+                <React.Fragment>
+                  <FormControl>
+                    <FormLabel>Email</FormLabel>
+                    <Input disabled value={data?.email} />
+                  </FormControl>
+                  <HStack justifyContent="flex-end">
+                    <Dialog
+                      onConfirm={deleteAccount}
+                      title="Excluir conta"
+                      message="Tem certeza que deseja excluir sua conta?"
+                      trigger={({ open }) => (
+                        <Button
+                          variant="outline"
+                          colorScheme="red"
+                          onClick={() => {
+                            open()
+                          }}
+                        >
+                          Excluir
+                        </Button>
+                      )}
+                    />
+                    <Button colorScheme="purple" type="submit">
+                      Salvar
+                    </Button>
+                  </HStack>
+                </React.Fragment>
+              }
+            />
+          )}
+        />
+        {location.pathname == '/animes' && (
+          <Input onChange={onInputChange} placeholder="Pesquisar" flex={0.4} mx="auto" value={search} />
+        )}
+        <Link ml="auto" onClick={logout}>
+          Sair
+        </Link>
+      </HStack>
+    </Stack>
   )
 }

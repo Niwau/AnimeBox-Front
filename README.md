@@ -1,27 +1,38 @@
-# React + TypeScript + Vite
+# AnimeBox Frontend 🎎
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+O AnimeBox Frontend é a interface de usuário para a aplicação AnimeBox, que permite aos usuários criar e gerenciar uma lista de animes. Este README fornece informações sobre como configurar e executar o frontend do projeto.
 
-Currently, two official plugins are available:
+## Demonstração
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Para ver o AnimeBox em ação, assista ao vídeo demonstrativo do projeto: [Demonstração do Projeto](https://drive.google.com/file/d/1VJC7G4j7F9IvU_stWxWlzbMZzqV8JgcH/view?usp=sharing)
 
-## Expanding the ESLint configuration
+## Tecnologias
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+O frontend do AnimeBox foi desenvolvido utilizando as seguintes tecnologias:
 
-- Configure the top-level `parserOptions` property like this:
+- React
+- TypeScript
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+## Instalação
+
+Antes de iniciar, certifique-se de ter o **Node.js** e o npm instalados. Siga os passos abaixo para configurar o ambiente de desenvolvimento do frontend.
+
+```bash
+# Comando para instalar as dependências do projeto
+npm install
+
+# Comando para iniciar o servidor de desenvolvimento do React
+npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Após executar os comandos acima, o servidor de desenvolvimento estará rodando e você poderá acessar o projeto no seu navegador.
+
+## Conexão com o Backend
+
+Certifique-se de que o backend do AnimeBox esteja rodando conforme as instruções do README do backend. O frontend se comunicará com o backend para gerenciar a lista de animes.
+
+[Documentação do Backend](https://github.com/Niwau/AnimeBox-API)
+
+## Créditos
+
+Interface desenvolvida com 💙 por **Guilherme Ribeiro** e **Mylena Gusmão**.
